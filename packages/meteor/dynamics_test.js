@@ -16,6 +16,16 @@ Tinytest.add("environment - dynamic variables", function (test) {
   test.equal(CurrentFoo.get(), undefined);
 });
 
+Tinytest.add("environment - nested withValue", function(test) {
+  var Outer = new Meteor.EnvironmentVariable;
+  var Inner = new Meteor.EnvironmentVariable;
+  Outer.withValue(17, function() {
+    Inner.withValue(43, function() {
+      test.equal(Outer.get(), 17);
+    });
+  });
+});
+
 Tinytest.addAsync("environment - bindEnvironment", async function (test) {
   var raised_f;
 
